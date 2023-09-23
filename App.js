@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import React from 'react';
 import { StyleSheet, Text, View , SafeAreaView, StatusBar, Button} from 'react-native';
 import Form from './src/components/Form'
@@ -12,6 +12,11 @@ export default function App() {
   const [months, setMonths] = useState(null);
   const [total, setTotal] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
+
+  useEffect(()=>{
+    if(capital && interest && months)calculate();
+    else reset();
+  },[capital,months,interest])//Cuando algun estado se actualice
 
   const calculate = ()=> {
     if(capital==null) {
