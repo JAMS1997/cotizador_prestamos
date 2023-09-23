@@ -11,14 +11,15 @@ export default function App() {
   const [interest, setInterest] = useState(null);
   const [months, setMonths] = useState(null);
   const [total, setTotal] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const calculate = ()=> {
     if(capital==null) {
-      console.log("Añade el capital que quieres solicitar")
+      setErrorMessage("Añade el capital que quieres solicitar")
   }else if(interest==null) {
-      console.log("Añade el interes del prestamo");
+      setErrorMessage("Añade el interes del prestamo");
   }else if(months==null) {
-      console.log("Añade la cantidad de meses");
+      setErrorMessage("Añade la cantidad de meses");
   }else{
     const i = interest / 100;
     const fee = capital / ((1 - Math.pow(i+1,-months))/i);
@@ -28,6 +29,10 @@ export default function App() {
     });
   }
 }
+  const reset = ()=>{
+    setErrorMessage("");
+    setTotal(null);
+  }
   return (
     <>
     <StatusBar bardStyle="light-content"/>
@@ -35,7 +40,12 @@ export default function App() {
       <Text style={styles.titleApp}>Cotizador de prestamos</Text>
       <Form setCapital={setCapital} setInterest={setInterest} setMonths={setMonths} />
     </SafeAreaView>
-    <ResultCalculation/>
+    <ResultCalculation    
+    total={total}
+    months={months}
+    interest={interest}
+    capital={capital}
+    errorMessage={errorMessage}/>
     <Footer calculate={calculate}/>
 
    
